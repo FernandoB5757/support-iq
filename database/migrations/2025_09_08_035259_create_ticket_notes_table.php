@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('ticket_notes', function (Blueprint $table) {
             $table->id();
             $table->foreignUlid('ticket_id');
-            $table->string('subject')
+            $table->string('owner')
                 ->nullable();
             $table->string('content');
             $table->timestamps();

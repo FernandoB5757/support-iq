@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Actions\Tickets\CreateTicket;
 use App\Actions\Tickets\GetListTickets;
+use App\Actions\Tickets\UpdateTicket;
 use App\DTOs\TicketIndexRequestData;
 use App\DTOs\TicketStoreRequestData;
+use App\DTOs\TicketUpdateRequestData;
 use App\Http\Requests\StoreTicketRequest;
+use App\Http\Requests\UpdateTicketRequest;
 use App\Http\Resources\TicketResource;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
@@ -84,9 +87,15 @@ class TicketController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Ticket $ticket)
+    public function update(UpdateTicketRequest $request, Ticket $ticket)
     {
-        //
+        return (new UpdateTicket)->update(
+            TicketUpdateRequestData::fromRequest(
+                $request->validated()
+            ),
+            $ticket
+        );
+
     }
 
     /**

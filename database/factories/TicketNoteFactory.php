@@ -21,10 +21,10 @@ class TicketNoteFactory extends Factory
         ];
     }
 
-    public function withSubject(): static
+    public function withOwner(): static
     {
         return $this->state(fn (array $attributes) => [
-            'subject' => fake()->name(),
+            'owner' => fake()->name(),
         ]);
     }
 }

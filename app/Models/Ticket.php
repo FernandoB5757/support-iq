@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 /**
  * @property-read string $id
  * @property string $subject
+ * @property int $category_id
  * @property string $body
  * @property TicketStatus $status
  * @property string $confidence

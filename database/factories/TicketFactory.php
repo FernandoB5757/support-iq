@@ -21,7 +21,7 @@ class TicketFactory extends Factory
     public function definition(): array
     {
         return [
-            'subject' => fake()->name(),
+            'subject' => fake()->title(),
             'body' => fake()->paragraph(),
             'status' => TicketStatus::OPEN,
             'explanation' => fake()->paragraph(),
@@ -50,7 +50,7 @@ class TicketFactory extends Factory
     {
         return $this->afterCreating(function (Ticket $record) use ($count) {
             $record->notes()->saveMany(
-                TicketNote::factory($count)->withSubject()->make()
+                TicketNote::factory($count)->withOwner()->make()
             );
         });
     }
