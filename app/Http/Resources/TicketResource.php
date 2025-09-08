@@ -24,6 +24,16 @@ class TicketResource extends JsonResource
     {
         $this->resource->makeHidden('deleted_at');
 
-        return $this->resource->toArray();
+        if ($request->is('tickets.index')) {
+            return parent::toArray($request);
+        }
+
+        return array_merge(
+            parent::toArray($request),
+            [
+                'category' => new CategoryResource($this->whenLoaded('category')),
+                'notes' => TicketNoteResource::collection($this->whenLoaded('notes')),
+            ]
+        );
     }
 }

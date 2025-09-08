@@ -19,7 +19,10 @@ return new class extends Migration
                 ->constrained();
             $table->string('subject');
             $table->text('body');
-            $table->enum('status', TicketStatus::values());
+            $table->text('explanation');
+            $table->text('confidence');
+            $table->enum('status', TicketStatus::values())
+                ->default(TicketStatus::OPEN->value);
             $table->timestamps();
             $table->softDeletes();
         });

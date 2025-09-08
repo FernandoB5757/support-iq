@@ -15,6 +15,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $subject
  * @property string $body
  * @property TicketStatus $status
+ * @property string $confidence
+ * @property string $explanation
  *
  * #Relationships
  * @property Category $category
@@ -23,6 +25,20 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Ticket extends Model
 {
     use HasFactory,HasUlids,SoftDeletes;
+
+    protected $fillable = [
+        'subject',
+        'body',
+        'status',
+        'explanation',
+        'confidence',
+    ];
+
+    protected $attributes = [
+        'status' => TicketStatus::OPEN->value,
+        'confidence' => '',
+        'explanation' => '',
+    ];
 
     /**
      * Get the attributes that should be cast.

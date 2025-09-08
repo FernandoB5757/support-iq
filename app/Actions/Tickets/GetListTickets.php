@@ -3,13 +3,14 @@
 namespace App\Actions\Tickets;
 
 use App\DTOs\TicketIndexRequestData;
-use App\Http\Resources\TicketCollection;
+use App\Http\Resources\TicketResource;
 use App\Models\Ticket;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class GetListTickets
 {
-    public function get(TicketIndexRequestData $data): TicketCollection
+    public function get(TicketIndexRequestData $data): AnonymousResourceCollection
     {
         $query = Ticket::query();
 
@@ -27,8 +28,6 @@ class GetListTickets
             $query->latest();
         }
 
-        return new TicketCollection(
-            $query->paginate($data->paginate)
-        );
+        return TicketResource::collection($query->paginate($data->paginate));
     }
 }
