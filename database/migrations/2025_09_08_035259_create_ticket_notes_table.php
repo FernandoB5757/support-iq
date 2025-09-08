@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('ticket_notes', function (Blueprint $table) {
             $table->id();
+            $table->foreignUlid('ticket_id');
             $table->string('subject')
                 ->nullable();
             $table->string('content');

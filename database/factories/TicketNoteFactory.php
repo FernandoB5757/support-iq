@@ -17,7 +17,14 @@ class TicketNoteFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'content' => fake()->paragraph(1),
         ];
+    }
+
+    public function withSubject(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'subject' => fake()->name(),
+        ]);
     }
 }

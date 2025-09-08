@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Ticket;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,13 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('category_ticket', function (Blueprint $table) {
+        Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('category_id')
-                ->constrained();
-            $table->foreignIdFor(Ticket::class, 'ticket_id')
-                ->constrained();
+            $table->string('name')
+                ->unique();
+            $table->string('slug')
+                ->unique();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('category_ticket');
+        Schema::dropIfExists('categories');
     }
 };

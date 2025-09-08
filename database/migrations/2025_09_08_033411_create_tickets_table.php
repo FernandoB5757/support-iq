@@ -14,6 +14,9 @@ return new class extends Migration
     {
         Schema::create('tickets', function (Blueprint $table) {
             $table->ulid('id')->primary();
+            $table->foreignId('category_id')
+                ->nullable()
+                ->constrained();
             $table->string('subject');
             $table->text('body');
             $table->enum('status', TicketStatus::values());
