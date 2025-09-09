@@ -35,7 +35,7 @@ class StoreTicketRequest extends FormRequest
             ],
 
             'confidence' => [
-                'nullable', 'float', 'max:1', 'min:0',
+                'nullable', 'numeric:strict', 'max:1', 'min:0',
             ],
 
             'category_id' => [
