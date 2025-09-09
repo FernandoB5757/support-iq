@@ -93,3 +93,16 @@ Testing: Expand unit and feature test coverage, including edge cases for classif
 CI/CD: Add GitHub Actions for automated linting, testing, and build steps.
 
 Monitoring: Add observability (logs, metrics, error tracking) for production readiness.
+
+Testing: Implement tests in parallel with feature development. Expand unit and feature coverage to include edge cases for classification, rate-limiting, and bulk jobs.
+
+
+#### 📬 Postman Collection
+
+A Postman collection is included in this repository to simplify API testing and exploration.
+**File**: Support QA.postman_collection.json
+**Location**: Root of this repository
+**Contents**:
+    - Full API documentation
+    - Ready-to-use request examples for each endpoint
+You can import this file directly into Postman to start sending requests and reviewing responses.

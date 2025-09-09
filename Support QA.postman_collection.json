@@ -1,0 +1,215 @@
+{
+	"info": {
+		"_postman_id": "48501d35-1056-4a73-b690-35406e700b0b",
+		"name": "Support QA",
+		"description": "## 📌 Ticket Endpoints\n\n### 1\\. **List Tickets**\n\n`GET /tickets`\n\nValidated by **IndexTicketRequest**\n\n**Query Parameters:**\n\n| Parameter | Type | Required | Description |\n| --- | --- | --- | --- |\n| `search` | string | No | Search text in subject/body (max 255 chars). |\n| `column_to_order` | string | No | Column to sort by. Allowed: `status`, `subject`, `created_at`, `updated_at`. |\n| `order_by` | string | No | Sort direction. Allowed: `asc`, `desc`. |\n| `paginate` | int | No | Items per page. Allowed: `10, 15, 25, 35`. |\n\n**Example:**\n\n```\nGET /tickets?search=login&column_to_order=created_at&order_by=desc&paginate=15\n\n ```\n\n---\n\n### 2\\. **Create Ticket**\n\n`POST /tickets`\n\nValidated by **StoreTicketRequest**\n\n**Body Parameters:**\n\n| Field | Type | Required | Description |\n| --- | --- | --- | --- |\n| `subject` | string | Yes | Ticket subject (max 255 chars). |\n| `body` | string | Yes | Ticket description (max 1000 chars). |\n| `explanation` | string | No | Classification explanation (max 1000 chars). |\n| `confidence` | string | No | Float betwen 0-1 |\n| `category_id` | int | No | Existing category ID from `categories` table. |\n\n**Example:**\n\n``` json\n{\n  \"subject\": \"Login error\",\n  \"body\": \"The user cannot log in with the corporate email.\",\n  \"category_id\": 2\n}\n\n ```\n\n---\n\n### 3\\. **Update Ticket**\n\n`PATCH /tickets/{id}`\n\nValidated by **UpdateTicketRequest**\n\n**Body Parameters:**\n\n| Field | Type | Required | Description |\n| --- | --- | --- | --- |\n| `status` | enum | Yes | Ticket status. Allowed values come from `TicketStatus` (e.g. `open`, `in_progress`, `closed`). |\n| `category_id` | int | No | Existing category ID from `categories` table. |\n| `note` | object | No | Internal note linked to the ticket. |\n| `note.content` | string | No | Note content (max 255 chars). |\n| `note.owner` | string | No | Author of the note (max 255 chars). |\n\n**Example:**\n\n``` json\n{\n  \"status\": \"in_progress\",\n  \"category_id\": 3,\n  \"note\": {\n    \"content\": \"Reviewed by support team.\",\n    \"owner\": \"Fernando\"\n  }\n}\n\n ```\n\n### **4\\. Show Ticket**\n\n`GET /tickets/{id}`\n\n**Path Parameter:**\n\n| Parameter | Type | Required | Description |\n| --- | --- | --- | --- |\n| `id` | ULID | Yes | Ticket unique identifier. |\n\n**Behavior:**\n\n- Returns the specified ticket with its relations:\n    - `category`\n    - `notes`\n\n### 5\\. **Classify Ticket**\n\n`POST /tickets/{id}/classify`\n\nRuns an **AI classification job** for the given ticket. The classification will predict a category, explanation, and confidence score.\n\n**Path Parameter:**\n\n| Parameter | Type | Required | Description |\n| --- | --- | --- | --- |\n| `id` | ULID | Yes | Ticket unique identifier. |",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23040073"
+	},
+	"item": [
+		{
+			"name": "Index",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{local_url}}/api/tickets?column_to_order=created_at&order_by=desc",
+					"host": [
+						"{{local_url}}"
+					],
+					"path": [
+						"api",
+						"tickets"
+					],
+					"query": [
+						{
+							"key": "search",
+							"value": null,
+							"disabled": true
+						},
+						{
+							"key": "column_to_order",
+							"value": "created_at"
+						},
+						{
+							"key": "order_by",
+							"value": "desc"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Show",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "{{local_url}}/api/tickets/01k4nads3vhy8vnhp76h3zz0wz",
+					"host": [
+						"{{local_url}}"
+					],
+					"path": [
+						"api",
+						"tickets",
+						"01k4nads3vhy8vnhp76h3zz0wz"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Store",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "subject",
+							"value": "{{$randomCatchPhraseNoun}}",
+							"type": "text"
+						},
+						{
+							"key": "body",
+							"value": "{{$randomLoremSentence}}",
+							"type": "text"
+						},
+						{
+							"key": "category_id",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "explanation",
+							"value": "{{$randomLoremSentence}}",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "confidence",
+							"value": "0.1",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "{{local_url}}/api/tickets",
+					"host": [
+						"{{local_url}}"
+					],
+					"path": [
+						"api",
+						"tickets"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"status\": \"in_progress\",\n    //category_id:1\n    \"note\":{\n        \"owner\" : null,\n        \"content\" : \"Ticket status updated.\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{local_url}}/api/tickets/01k4r195tksg4bx2kjasya5yfb",
+					"host": [
+						"{{local_url}}"
+					],
+					"path": [
+						"api",
+						"tickets",
+						"01k4r195tksg4bx2kjasya5yfb"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Classify",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{local_url}}/api/tickets/01k4r195tksg4bx2kjasya5yfb/classify",
+					"host": [
+						"{{local_url}}"
+					],
+					"path": [
+						"api",
+						"tickets",
+						"01k4r195tksg4bx2kjasya5yfb",
+						"classify"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "local_url",
+			"value": "support.test",
+			"type": "string"
+		}
+	]
+}
