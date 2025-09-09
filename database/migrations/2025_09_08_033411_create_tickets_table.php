@@ -19,8 +19,8 @@ return new class extends Migration
                 ->constrained();
             $table->string('subject');
             $table->text('body');
-            $table->text('explanation');
-            $table->text('confidence');
+            $table->text('explanation')->nullable();
+            $table->text('confidence')->nullable();
             $table->enum('status', TicketStatus::values())
                 ->default(TicketStatus::OPEN->value);
             $table->timestamps();

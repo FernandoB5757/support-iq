@@ -5,6 +5,7 @@ namespace App\Actions\Tickets;
 use App\DTOs\TicketStoreRequestData;
 use App\Models\Ticket;
 use App\Models\TicketNote;
+use OpenAI\Laravel\Facades\OpenAI;
 
 class CreateTicket
 {
@@ -24,6 +25,11 @@ class CreateTicket
         ]);
 
         // TODO: add job to assign
+
+        OpenAI::responses()->create([
+            'model' => 'gpt-5',
+            'input' => 'Hello!',
+        ]);
 
         return $ticket;
     }

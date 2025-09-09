@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Contracts\Prompteable;
 use App\Models\Enums\TicketStatus;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -23,7 +24,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property Category $category
  * @property \Illuminate\Database\Eloquent\Collection<int,TicketNote> $notes
  */
-class Ticket extends Model
+class Ticket extends Model implements Prompteable
 {
     use HasFactory,HasUlids,SoftDeletes;
 
@@ -61,5 +62,10 @@ class Ticket extends Model
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function getPrompt(): string
+    {
+        return 'Subject '.$this->subject.', Body: '.$this->body;
     }
 }

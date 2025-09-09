@@ -21,8 +21,8 @@ class TicketFactory extends Factory
     public function definition(): array
     {
         return [
-            'subject' => fake()->title(),
-            'body' => fake()->paragraph(),
+            'subject' => fake()->paragraph(),
+            'body' => fake()->paragraph(5),
             'status' => TicketStatus::OPEN,
             'explanation' => fake()->paragraph(),
             'confidence' => fake()->paragraph(),

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Actions\Tickets\CreateTicket;
 use App\Actions\Tickets\GetListTickets;
 use App\Actions\Tickets\UpdateTicket;
+use App\Contracts\OpenAICreator;
 use App\DTOs\TicketIndexRequestData;
 use App\DTOs\TicketStoreRequestData;
 use App\DTOs\TicketUpdateRequestData;
@@ -104,5 +105,14 @@ class TicketController extends Controller
     public function destroy(Ticket $ticket)
     {
         //
+    }
+
+    public function classify(Ticket $ticket, OpenAICreator $openAICreator)
+    {
+        // $openAICreator
+        //     ->record($ticket)
+        //     ->create()
+
+        // TODO: handle job
     }
 }
