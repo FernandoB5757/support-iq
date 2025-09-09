@@ -19,7 +19,7 @@ class TicketSeeder extends Seeder
                 ['id']
             );
 
-        Ticket::factory(2)
+        Ticket::factory(7)
             ->notes()
             ->category()
             ->create();
@@ -30,7 +30,7 @@ class TicketSeeder extends Seeder
             ->inProgress()
             ->create();
 
-        Ticket::factory(3)
+        Ticket::factory(5)
             ->notes()
             ->category()
             ->closed()

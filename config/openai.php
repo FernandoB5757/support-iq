@@ -15,6 +15,8 @@ return [
     'api_key' => env('OPENAI_API_KEY'),
     'organization' => env('OPENAI_ORGANIZATION'),
 
+    'classify_enabled' => env('OPENAI_CLASSIFY_ENABLED'),
+
     /*
     |--------------------------------------------------------------------------
     | OpenAI API Project

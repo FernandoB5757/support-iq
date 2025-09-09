@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Contracts\OpenAICreator;
 use App\Models\Ticket;
 use App\Service\OpenAITicketCreator;
+use App\Service\OpenAITicketCreatorFaker;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
@@ -17,7 +18,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->scoped(OpenAICreator::class, OpenAITicketCreator::class);
+        if (config('openai.classify_enabled')) {
+            $this->app->scoped(OpenAICreator::class, OpenAITicketCreator::class);
+        } else {
+            $this->app->scoped(OpenAICreator::class, OpenAITicketCreatorFaker::class);
+        }
     }
 
     /**
@@ -30,14 +35,14 @@ class AppServiceProvider extends ServiceProvider
         });
 
         RateLimiter::for('api.openai', function (Request $request) {
-            return Limit::perMinute(60)->by($request->ip());
+
             if ($request->routeIs('tickets.classify')) {
                 $ticket = Ticket::query()
                     ->select('id')
                     ->toBase()
                     ->firstOrFail($request->route('ticket'));
 
-                return Limit::perDay(100)// TODO change limit to 2
+                return Limit::perDay(1)
                     ->by($ticket->id);
             }
 
