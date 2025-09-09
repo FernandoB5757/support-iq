@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('subject');
             $table->text('body');
             $table->text('explanation')->nullable();
-            $table->text('confidence')->nullable();
+            $table->float('confidence')->nullable();
             $table->enum('status', TicketStatus::values())
                 ->default(TicketStatus::OPEN->value);
             $table->timestamps();

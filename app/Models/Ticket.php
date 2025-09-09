@@ -38,8 +38,6 @@ class Ticket extends Model implements Prompteable
 
     protected $attributes = [
         'status' => TicketStatus::OPEN->value,
-        'confidence' => '',
-        'explanation' => '',
     ];
 
     /**

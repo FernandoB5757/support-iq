@@ -18,4 +18,9 @@ readonly class AIClassifyResponse
             confidence : $data->confidence
         );
     }
+
+    public function toString()
+    {
+        return json_encode($this);
+    }
 }

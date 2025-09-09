@@ -5,13 +5,13 @@ namespace App\Http\Controllers;
 use App\Actions\Tickets\CreateTicket;
 use App\Actions\Tickets\GetListTickets;
 use App\Actions\Tickets\UpdateTicket;
-use App\Contracts\OpenAICreator;
 use App\DTOs\TicketIndexRequestData;
 use App\DTOs\TicketStoreRequestData;
 use App\DTOs\TicketUpdateRequestData;
 use App\Http\Requests\StoreTicketRequest;
 use App\Http\Requests\UpdateTicketRequest;
 use App\Http\Resources\TicketResource;
+use App\Jobs\ClassifyTicket;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -107,12 +107,14 @@ class TicketController extends Controller
         //
     }
 
-    public function classify(Ticket $ticket, OpenAICreator $openAICreator)
+    public function classify(Ticket $ticket)
     {
-        // $openAICreator
-        //     ->record($ticket)
-        //     ->create()
+        ClassifyTicket::dispatch($ticket);
 
-        // TODO: handle job
+        return response()
+            ->json([
+                'message' => 'Classification process started in the background',
+                'status' => 200,
+            ]);
     }
 }

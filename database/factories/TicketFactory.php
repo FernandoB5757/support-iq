@@ -25,7 +25,7 @@ class TicketFactory extends Factory
             'body' => fake()->paragraph(5),
             'status' => TicketStatus::OPEN,
             'explanation' => fake()->paragraph(),
-            'confidence' => fake()->paragraph(),
+            'confidence' => fake()->randomFloat(2, 0, 1),
         ];
     }
 

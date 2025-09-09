@@ -11,7 +11,7 @@ readonly class TicketStoreRequestData
         public string $subject,
         public string $body,
         public string $explanation,
-        public string $confidence,
+        public ?float $confidence = null,
         public ?int $category_id = null
     ) {}
 
@@ -21,7 +21,7 @@ readonly class TicketStoreRequestData
             subject: Arr::get($data, 'subject'),
             body: Arr::get($data, 'body'),
             explanation : Arr::get($data, 'explanation', ''),
-            confidence : Arr::get($data, 'confidence', ''),
+            confidence : Arr::get($data, 'confidence'),
             category_id: Arr::get($data, 'category_id')
         );
     }
