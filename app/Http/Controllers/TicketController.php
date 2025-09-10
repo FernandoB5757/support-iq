@@ -25,9 +25,10 @@ class TicketController extends Controller
     public function index(Request $request)
     {
         $validator = Validator::make([
-            'serch' => $request->query('serch'),
+            'search' => $request->query('serch'),
             'column_to_order' => $request->query('column_to_order'),
             'order_by' => $request->query('order_by'),
+            'paginate' => $request->query('paginate'),
         ],
             [
                 'search' => 'nullable|max:255',

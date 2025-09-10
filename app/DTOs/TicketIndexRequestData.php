@@ -19,7 +19,7 @@ readonly class TicketIndexRequestData
             search: Arr::get($data, 'search'),
             columnToOrder: Arr::get($data, 'column_to_order'),
             orderBy: Arr::get($data, 'order_by', 'desc'),
-            paginate: Arr::get($data, 'paginate', 10)
+            paginate: Arr::get($data, 'paginate') ?? 10
         );
     }
 }
